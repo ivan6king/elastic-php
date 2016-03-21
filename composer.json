@@ -1,5 +1,5 @@
 {
-    "name": "ivan6king/elastic-php",
+    "name": "ivan/elastic",
     "type": "library",
     "description": "Elasticsearch PHP lib",
     "keywords": ["Elasticsearch", "elastic","es","elasticsearch"],
