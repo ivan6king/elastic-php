@@ -1,0 +1,16 @@
+{
+    "name": "ivan6king/elastic-php",
+    "type": "library",
+    "description": "Elasticsearch PHP lib",
+    "keywords": ["Elasticsearch", "elastic","es","elasticsearch"],
+    "homepage": "https://github.com/ivan6king/elastic-php",
+    "license": "MIT",
+    "authors": [
+        {"name": "ivan6king", "email": "ivan6king@gmail.com"}
+    ],
+    "autoload": {
+        "psr-4": { 
+            "Ivan\\Elastic\\": "lib/"
+        }
+    }
+}
