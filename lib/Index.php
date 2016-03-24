@@ -115,4 +115,22 @@ class Index
         return $result;
     }
 
+    public function getAll(){
+        $res = Curl::httpGet($this->_url.'_cat/indices/',false,true);
+        if ($res['header']['http_code']==200) {
+            $result['status']=1;
+            $result['data']=$res['body'];
+        }elseif($res['err']!=''){
+            throw new \Exception($res['err']);
+        }else{
+            $result['status']=0;
+            $result['data']=$res['body'];
+        }
+        return $result;
+    }
+
+    public function search($search){
+        // $res = Curl::httpGet($this->_url.'_cat/indices/',false,true);
+    }
+
 }

@@ -3,7 +3,7 @@ namespace Ivan\Elastic;
 
 class Curl {
 
-    public static function httpGet($url,$header=false,$body=true,$timeout=5){
+    public static function httpGet($url,$header=false,$body=true,$timeout=10){
         $response = array('header'=>false,'body'=>false,'err'=>'');
         $ch = curl_init();
         curl_setopt( $ch, CURLOPT_URL, $url );
@@ -18,7 +18,7 @@ class Curl {
         return $response;
     }
 
-    public static function httpPost($url,$params=array(),$header=false,$body=false,$timeout=5) {
+    public static function httpPost($url,$params=array(),$header=false,$body=false,$timeout=10) {
         // $postData = json_encode($params);
         $postData = is_array($params)?json_encode($params):$params;
         $ch = curl_init();  
@@ -41,7 +41,7 @@ class Curl {
 
     
 
-    public static function httpHead($url,$header=false,$body=false,$timeout=5){
+    public static function httpHead($url,$header=false,$body=false,$timeout=10){
         $response = array('header'=>false,'body'=>false,'err'=>'');
         $ch = curl_init();
         curl_setopt( $ch, CURLOPT_URL, $url );
@@ -59,7 +59,7 @@ class Curl {
     }
 
 
-    public static function httpPut($url,$fields='',$header=false,$body=true,$timeout=5){
+    public static function httpPut($url,$fields='',$header=false,$body=true,$timeout=10){
         $response = array('header'=>false,'body'=>false);
         $ch = curl_init();
         curl_setopt( $ch, CURLOPT_URL, $url );
@@ -78,7 +78,7 @@ class Curl {
         return $response;
     }
 
-    public static function httpDelete($url,$header=false,$body=true,$timeout=5){
+    public static function httpDelete($url,$header=false,$body=true,$timeout=10){
         $response = array('header'=>false,'body'=>false,'err'=>'');
         $ch = curl_init();
         curl_setopt( $ch, CURLOPT_URL, $url );
