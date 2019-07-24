@@ -87,7 +87,7 @@ class Index
 
     public function close(){
         $result = array('status'=>0,'data'=>'','err'=>'');
-        $res = Curl::httpPost($this->_url.$this->_name.'/_close',array(),false,true);
+        $res = Curl::httpPost($this->_url.$this->_name.'/_close',array(),array(),false,true);
         if ($res['header']['http_code']==200) {
             $result['status']=1;
             $result['data']=$res['body'];
@@ -102,7 +102,7 @@ class Index
 
     public function open(){
         $result = array('status'=>0,'data'=>'','err'=>'');
-        $res = Curl::httpPost($this->_url.$this->_name.'/_open',array(),false,true);
+        $res = Curl::httpPost($this->_url.$this->_name.'/_open',array(),array(),false,true);
         if ($res['header']['http_code']==200) {
             $result['status']=1;
             $result['data']=$res['body'];

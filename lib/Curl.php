@@ -18,13 +18,14 @@ class Curl {
         return $response;
     }
 
-    public static function httpPost($url,$params=array(),$header=false,$body=false,$timeout=10) {
+    public static function httpPost($url,$params=array(),$req_header=[],$header=false,$body=false,$timeout=10) {
         // $postData = json_encode($params);
         $postData = is_array($params)?json_encode($params):$params;
         $ch = curl_init();  
         curl_setopt($ch,CURLOPT_URL,$url);
         curl_setopt($ch,CURLOPT_RETURNTRANSFER,true);
         curl_setopt($ch,CURLOPT_HEADER, $header); 
+        curl_setopt($ch, CURLOPT_HTTPHEADER, $req_header);
         curl_setopt($ch, CURLOPT_POST, true);
         curl_setopt($ch, CURLOPT_POSTFIELDS, $postData);
         if(!is_array($params)){
@@ -94,4 +95,22 @@ class Curl {
         curl_close($ch);
         return $response;
     }
+    public static function httpJson($url, $params = array(), $header = [], $method = "POST", $timeout = 10)
+    {
+        $postData = json_encode($params);
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, $method);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $postData);
+        curl_setopt($ch, CURLOPT_HEADER, false);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, $header);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $postData);
+        curl_setopt($ch, CURLOPT_TIMEOUT, $timeout);
+        $response['body'] = curl_exec($ch);
+        $response['err'] = $response['body'] === false || curl_errno($ch) ? curl_error($ch) : '';
+        $response['header'] = curl_getinfo($ch);
+        curl_close($ch);
+        return $response;
+     }
 }

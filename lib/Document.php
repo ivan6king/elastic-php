@@ -6,9 +6,29 @@ class Document
     private $_config = null;
     private $_name = null;
     private $_url = '';
+    private $_user = '';
+    private $_passwd = '';
+    private $_req_header = array();
+
     public function __construct($config) {
         $this->_config = $config;
         $this->_url = $config[0]['host'];
+        $this->_user = $config[0]['user'];
+        $this->_passwd = $config[0]['passwd'];
+        $this->_req_header = $this->setReqHeader();
+    }
+
+    public function setReqHeader(){
+        $token = $this->basicAuthHeaderValue();
+        $this->_req_header = [
+            'Content-Type:application/json',
+            "Authorization:Basic {$token}"
+        ];
+    }
+
+    private function basicAuthHeaderValue(){
+        $token = base64_encode($this->_user . ":" . $this->_passwd);
+        return $token;
     }
 
     public function setIndex($name){
@@ -47,8 +67,8 @@ class Document
     }
     private function postAdd($params){
         $result = array('status'=>0,'data'=>'','err'=>'');
-        // $res = Curl::httpPost($this->_url.$this->_name.'/',json_encode($params),false,true);
-        $res = Curl::httpPost($this->_url.$this->_name.'/',$params,false,true);
+        // $res = Curl::httpPost($this->_url.$this->_name.'/',json_encode($params),array(),array(),false,true);
+        $res = Curl::httpPost($this->_url.$this->_name.'/',$params,$this->_req_header,false,true);
         if ($res['header']['http_code']==201) {
             $result['status']=1;
             $result['data']=$res['body'];
@@ -114,7 +134,7 @@ class Document
             $str = $str."\n";
         }
         // $res = Curl::httpPost($this->_url.$this->_name.'/',json_encode($params),false,true);
-        $res = Curl::httpPost($this->_url.'_bulk',$str,false,true);
+        $res = Curl::httpPost($this->_url.'_bulk',$str,$this->_req_header,false,true);
         if ($res['header']['http_code']==200 ) {
             $fbody = json_decode($res['body'],true);
             $result['status'] = $fbody['errors']==false?1:0;
