@@ -15,7 +15,7 @@ class Document
         $this->_url = $config[0]['host'];
         $this->_user = $config[0]['user'];
         $this->_passwd = $config[0]['passwd'];
-        $this->_req_header = $this->setReqHeader();
+        $this->setReqHeader();
     }
 
     public function setReqHeader(){
